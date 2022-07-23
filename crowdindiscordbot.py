@@ -14,7 +14,7 @@ from crowdin_api import CrowdinClient
 # Gets the bot token from a seperate file called BotToken.py that looks like this:
 # token = "insert_your_token_here"
 from BotToken import token
-
+from BotToken import crowdintoken
 
 
 # invite Link for dc bot:
@@ -28,7 +28,7 @@ testingserverId = [587658490764591123,801080634670972940,302152934249070593,9555
 
 
 class FirstCrowdinClient(CrowdinClient):
-    TOKEN = "6b453cab0052429b4498f637fff52c8bcfc5a873a387139adf5ae82dbbf7ad970176f23dcaba7e05"
+    TOKEN = crowdintoken
     TIMEOUT = 60  # Optional, sets http request timeout.
     RETRY_DELAY = 0.1  # Optional, sets the delay between failed requests
     MAX_RETRIES = 5  # Optional, sets the number of retries
