@@ -1,11 +1,10 @@
 from __future__ import unicode_literals
-
 import time
 import urllib.request
+
 from nextcord.ext import commands
 from nextcord import *
 import nextcord
-
 
 import crowdin_api.exceptions
 from crowdin_api import CrowdinClient
@@ -37,33 +36,27 @@ class FirstCrowdinClient(CrowdinClient):
 
 crowdin_client = FirstCrowdinClient()
 
-
+# Crowdin Project Id
 project_id = 497567
-
-
-
 
 
 def storages__list():
     # Get a list of Storages
-
     store = crowdin_client.storages.list_storages()
     print(store)
 
 def directories__list():
     # Get a list of Directories
-
     directs = crowdin_client.source_files.list_directories(projectId=project_id)
     print(directs)
 
 def adding_a_file(file_name):
+    # Uploads the file to storage and after that adds it to the project
     storage = crowdin_client.storages.add_storage(open(file_name, 'rb'))
-
     my_file = crowdin_client.source_files.add_file(project_id, storage['data']['id'], file_name)
 
-    #print(my_file)
-
 def updating_a_file(file_name):
+    # checks existing files and tries to update the existing one
     filName_list = []
     filId_list = []
 
@@ -73,14 +66,9 @@ def updating_a_file(file_name):
     for x in range(number_of_files_in_project):
         filName = list__files["data"][x]["data"]["name"]
         filId = list__files["data"][x]["data"]["id"]
-
         # print(str(filName) + " has the Id: " + str(filId))
-
         filName_list.append(filName)
         filId_list.append(filId)
-
-    #print(filName_list)
-    #print(filId_list)
 
     index_filName = filName_list.index(file_name)
     filename_id = filId_list[index_filName]
@@ -110,7 +98,7 @@ async def addfile(ctx):
     attachment = ctx.message.attachments[0]
     # gets first attachment that user
     # sent along with command
-    #print(attachment.url)
+    # print(attachment.url)
     url = attachment.url
 
     list1 = str(url).split("/")
@@ -145,6 +133,8 @@ async def addfile(ctx):
         s = str(err)
         print(s)
         # Checks the error message to specify the Error
+
+
         # First Check: Checks if the Name of the file is already given.
         if s.__contains__("Invalid name given. Name must be unique"):
             #print("Error: Invalid name given. Name must be unique.")
@@ -196,6 +186,7 @@ async def addfile(ctx):
                 await ctx.send(embed=embed3)
                 time.sleep(3)
                 await ctx.channel.purge(limit=3)
+
 
         # Second Check: Checks if the Json Syntax is correct.
         elif s.__contains__("Incorrect json in request body. Syntax error"):
