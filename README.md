@@ -1,4 +1,3 @@
-#VintageTranslationBot
 [TOC]
 
 ##Commands
