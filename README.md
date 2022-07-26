@@ -1,41 +1,42 @@
 # VintageTranslation
+
 [TOC]
 
-##Commands
+## Commands
 
-###/addfile
+### /addfile
 
 Explains the usage of the !addfile command and how to upload a file to the project.
 
-###!addfile
+### !addfile
 
 Uploads a file to the project for translation, can update a file aswell.
 
-###/updatefile
+### /updatefile
 
 Explains the usage of the !addfile command and how to update a file to the project.
 
-###/language_progress
+### /language_progress
 
 Shows the translation progress of each language.
 
-###/add_language
+### /add_language
 
 Sends a request to add a language to the project.
 
-###/listfiles
+### /listfiles
 
 Lists all filenames on the project.
 
 
 
-##Extra Commands
+## Extra Commands
 
-###/project
+### /project
 
 Shares a link to the Crowdin project.
 
-###/wip
+### /wip
 
 Shares a link to the Development progress board.
    [dill]: <https://github.com/joemccann/dillinger>
