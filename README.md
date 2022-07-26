@@ -1,5 +1,3 @@
-[TOC]
-
 ##Commands
 
 ###/addfile
