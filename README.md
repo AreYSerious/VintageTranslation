@@ -30,8 +30,8 @@ Lists all filenames on the project.
 
 ### /project
 
-Shares a link to the Crowdin project.
+Shares a link to the crowdin project.
 
 ### /wip
 
-Shares a link to the Development progress board.
+Shares a link to the development progress board.
