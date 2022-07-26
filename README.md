@@ -1,3 +1,19 @@
+## Dependencies:
+
+### Crowdin Python Client V2
+```sh
+pip install crowdin-api-client
+```
+https://github.com/crowdin/crowdin-api-client-python
+
+
+### Nextcord
+```sh
+py -3 -m pip install -U nextcord
+```
+https://github.com/nextcord/nextcord
+
+
 ## Commands
 
 ### /addfile
