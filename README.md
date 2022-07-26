@@ -1,5 +1,4 @@
 # VintageTranslation
-## _The Last Markdown Editor, Ever_
 
    [dill]: <https://github.com/joemccann/dillinger>
    [git-repo-url]: <https://github.com/joemccann/dillinger.git>
