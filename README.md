@@ -33,13 +33,13 @@ Adding a file:
 
 Updating a file:
  
-![updatingfiletut](https://i.imgur.com/JP3CnT3.png)
+![updatingfiletut](https://i.imgur.com/odrHsUw.png)
 
 ### !addfile
 
 Uploads a file to the project for translation, can update a file aswell.
 
-![Addfile](https://i.imgur.com/odrHsUw.png)
+![Addfile](https://i.imgur.com/JP3CnT3.png)
 
 ### /updatefile
 
