@@ -20,7 +20,7 @@ https://github.com/nextcord/nextcord
 
 Explains the usage of the !addfile command and how to upload a file to the project.
 
-(https://i.imgur.com/odrHsUw.png)
+![Test Image 4](https://i.imgur.com/odrHsUw.png)
 
 ### !addfile
 
