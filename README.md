@@ -27,10 +27,12 @@ Shows a list of all possible commands.
 Explains the usage of the !addfile command and how to upload a file to the project.
 
 Adding a file:
+\n
 ![addfiletut](https://i.imgur.com/BGWvOF7.png)
 
 
 Updating a file:
+\n
 ![updatingfiletut](https://i.imgur.com/JP3CnT3.png)
 
 ### !addfile
