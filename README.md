@@ -16,15 +16,21 @@ https://github.com/nextcord/nextcord
 
 ## Commands
 
+### /help
+
+![help](https://i.imgur.com/fKKbxeB.png)
+
 ### /addfile
 
 Explains the usage of the !addfile command and how to upload a file to the project.
 
-![Test Image 4](https://i.imgur.com/odrHsUw.png)
+
 
 ### !addfile
 
 Uploads a file to the project for translation, can update a file aswell.
+
+![Addfile](https://i.imgur.com/odrHsUw.png)
 
 ### /updatefile
 
