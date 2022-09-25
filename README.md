@@ -2,7 +2,7 @@
 
 ### Discord Invite Link
 
-https://discord.com/api/oauth2/authorize?client_id=949725454477168661&permissions=140123630656&scope=applications.commands%20bot
+[Discord Invite Link](https://discord.com/api/oauth2/authorize?client_id=949725454477168661&permissions=140123630656&scope=applications.commands%20bot)
 
 ### Crowdin Python Client V2
 ```sh
