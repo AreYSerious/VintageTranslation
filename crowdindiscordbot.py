@@ -9,7 +9,6 @@ import nextcord
 import crowdin_api.exceptions
 from crowdin_api import CrowdinClient
 
-
 # Gets the bot token from a seperate file called BotToken.py that looks like this:
 # token = "insert_your_token_here"
 from BotToken import token
@@ -19,7 +18,7 @@ from BotToken import crowdintoken
 # invite Link for dc bot:
 # https://discord.com/api/oauth2/authorize?client_id=949725454477168661&permissions=140123630656&scope=applications.commands%20bot
 
-testingserverId = [587658490764591123,801080634670972940,302152934249070593,955576967346921654]
+#testingserverId = [587658490764591123,801080634670972940,302152934249070593,955576967346921654]
 
 
 
@@ -205,7 +204,7 @@ async def addfile(ctx):
 
 
 
-@client.slash_command(name="language_progress", description="Shows the Translation Progress.", guild_ids=testingserverId)
+@client.slash_command(name="language_progress", description="Shows the Translation Progress.") #, guild_ids=testingserverId
 async def progress(interaction: Interaction):
     project_progress = crowdin_client.translation_status.get_project_progress(project_id)
     #print(len(project_progress["data"]))
@@ -256,7 +255,7 @@ async def progress(interaction: Interaction):
 
 
 
-@client.slash_command(name="add_language", description="Requests to add a Language to the Crowdin Project.", guild_ids=testingserverId)
+@client.slash_command(name="add_language", description="Requests to add a Language to the Crowdin Project.") #, guild_ids=testingserverId
 async def language(
     interaction: Interaction,
     language_name: str = SlashOption(description="Name of a language", required=True),
@@ -286,7 +285,7 @@ async def language(
 
 
 
-@client.slash_command(name="addfile", description="Explanation on how to Upload a File for Translation.", guild_ids=testingserverId)
+@client.slash_command(name="addfile", description="Explanation on how to Upload a File for Translation.") #, guild_ids=testingserverId
 async def addfile(
     interaction: Interaction,
 ):
@@ -300,7 +299,7 @@ async def addfile(
 
 
 
-@client.slash_command(name="updatefile", description="Explanation on how to update a file for translation.", guild_ids=testingserverId)
+@client.slash_command(name="updatefile", description="Explanation on how to update a file for translation.") #, guild_ids=testingserverId
 async def updatefile(
     interaction: Interaction,
 ):
@@ -315,7 +314,7 @@ async def updatefile(
 
 
 
-@client.slash_command(name="help", description="Shows all commands for the VintageTranslation Bot.", guild_ids=testingserverId)
+@client.slash_command(name="help", description="Shows all commands for the VintageTranslation Bot.") #, guild_ids=testingserverId
 async def help(
     interaction: Interaction,
 ):
@@ -335,7 +334,7 @@ async def help(
 
 
 
-@client.slash_command(name="listfiles", description="List of all filenames.", guild_ids=testingserverId)
+@client.slash_command(name="listfiles", description="List of all filenames.") #, guild_ids=testingserverId
 async def listfile(
     interaction: Interaction,
 ):
@@ -352,7 +351,7 @@ async def listfile(
     await interaction.response.send_message(embed=embed)
 
 
-@client.slash_command(name="project", description="Shares a link to the Crowdin project.", guild_ids=testingserverId)
+@client.slash_command(name="project", description="Shares a link to the Crowdin project.") #, guild_ids=testingserverId
 async def project(
     interaction: Interaction,
 ):
@@ -364,7 +363,7 @@ async def project(
 
 
 
-@client.slash_command(name="wip", description="Overview of the Bot development.", guild_ids=testingserverId)
+@client.slash_command(name="wip", description="Overview of the Bot development.") #, guild_ids=testingserverId
 async def wip(
     interaction: Interaction,
 ):
