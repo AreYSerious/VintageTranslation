@@ -18,10 +18,6 @@ from BotToken import crowdintoken
 # invite Link for dc bot:
 # https://discord.com/api/oauth2/authorize?client_id=949725454477168661&permissions=140123630656&scope=applications.commands%20bot
 
-#testingserverId = [587658490764591123,801080634670972940,302152934249070593,955576967346921654]
-
-
-
 
 
 
@@ -78,13 +74,12 @@ def updating_a_file(file_name):
 
 
 
-
-
-
-
-
+# Discord Bot Setup
 
 client = commands.Bot(command_prefix="!", help_command=None, activity=nextcord.Game(name="/help"))
+
+
+# Response if ready
 
 @client.event
 async def on_ready():
@@ -92,7 +87,8 @@ async def on_ready():
 
 
 
-@client.command() # context is automatically passed in rewrite
+
+@client.command() # !addfile command
 async def addfile(ctx):
     attachment = ctx.message.attachments[0]
     # gets first attachment that user
@@ -152,7 +148,7 @@ async def addfile(ctx):
                                     description="**ADDING A FILE**")
             embed.add_field(name="`📁` › The file you tried to add is already existing or another file has the same name.\n`⚠️`\n`🆕` › If you want to add a new file please change the filename to something unique.\n`⚠️`", value="`🆙` › Otherwise if you want to update your existing file react to this message with ✅.", inline=False)
             embed.set_image(
-                url="https://cdn.discordapp.com/attachments/588044295810973705/955152835782246400/DiscordBotCommandBanners_fileupload.png")
+                url="https://cdn.discordapp.com/attachments/1008774599527387216/1030960173562462238/unknown.png")
             msg = await ctx.send(embed=embed)
             await msg.add_reaction('✅')
             await msg.add_reaction('❌')
@@ -169,7 +165,7 @@ async def addfile(ctx):
                     name="`⏏️` › File updated",
                     value="`✅` › Successfully", inline=False)
                 embed2.set_image(
-                    url="https://cdn.discordapp.com/attachments/588044295810973705/955152835782246400/DiscordBotCommandBanners_fileupload.png")
+                    url="https://cdn.discordapp.com/attachments/1008774599527387216/1030960173562462238/unknown.png")
                 await ctx.send(embed=embed2)
 
                 time.sleep(10)
@@ -181,7 +177,7 @@ async def addfile(ctx):
                     name="`❌`",
                     value="**Aborting...**", inline=False)
                 embed3.set_image(
-                    url="https://cdn.discordapp.com/attachments/588044295810973705/955152835782246400/DiscordBotCommandBanners_fileupload.png")
+                    url="https://cdn.discordapp.com/attachments/1008774599527387216/1030960173562462238/unknown.png")
                 await ctx.send(embed=embed3)
                 time.sleep(3)
                 await ctx.channel.purge(limit=3)
@@ -196,16 +192,15 @@ async def addfile(ctx):
                 name="`⚠️`** › Error**",
                 value="`⚠️` › Incorrect json in request body. Syntax error!", inline=False)
             embed1.set_image(
-                url="https://cdn.discordapp.com/attachments/588044295810973705/955173313062268958/DiscordBotCommandBanners_fileupload_error.png")
+                url="https://cdn.discordapp.com/attachments/1008774599527387216/1030961933140111371/ERROR.png")
             await ctx.send(embed=embed1)
 
 
 
 
 
-
-@client.slash_command(name="language_progress", description="Shows the Translation Progress.") #, guild_ids=testingserverId
-async def progress(interaction: Interaction):
+@client.slash_command(name="progress", description="Shows the Translation Progress.") # /progress
+async def langprogress(interaction: Interaction):
     project_progress = crowdin_client.translation_status.get_project_progress(project_id)
     #print(len(project_progress["data"]))
 
@@ -222,8 +217,12 @@ async def progress(interaction: Interaction):
             lang_id = ":flag_de: German:"
         if lang_id == "cs":
             lang_id = ":flag_cn: Chinese Simplified:"
+        if lang_id == "eo":
+            lang_id = ":flag_sa: Esperanto:"
         if lang_id == "ar":
             lang_id = ":flag_ae: Arabic:"
+        if lang_id == "it":
+            lang_id = ":flag_it: Italian:"
         if lang_id == "es-ES":
             lang_id = ":flag_es: Spanish:"
         if lang_id == "fr":
@@ -240,22 +239,22 @@ async def progress(interaction: Interaction):
             lang_id = ":flag_sk: Slovak:"
         if lang_id == "uk":
             lang_id = ":flag_ua: Ukrainian:"
-
+        if lang_id == "nl":
+            lang_id = ":flag_nl: Dutch:"
+        if lang_id == "sv-SE":
+            lang_id = ":flag_se: Swedish:"
+        if lang_id == "zh-CN":
+            lang_id = ":flag_cn: Chinese Simplified:"
 
 
 
         embed.add_field(name=lang_id, value=str(trans_prog) + "%", inline=False)
-    embed.set_image(url="https://cdn.discordapp.com/attachments/588044295810973705/955150814698160178/DiscordBotCommandBanners_langprog.png")
+    embed.set_image(url="https://cdn.discordapp.com/attachments/1008774599527387216/1030960175026294875/unknown.png")
 
     await interaction.response.send_message(embed=embed)
 
 
-
-
-
-
-
-@client.slash_command(name="add_language", description="Requests to add a Language to the Crowdin Project.") #, guild_ids=testingserverId
+@client.slash_command(name="reqlanguage", description="Requests to add a Language to the Crowdin Project.") # /reqlanguage
 async def language(
     interaction: Interaction,
     language_name: str = SlashOption(description="Name of a language", required=True),
@@ -278,43 +277,36 @@ async def language(
     embed1 = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                           description="**LANGUAGE REQUEST**")
     embed1.add_field(name="`🔣` › Request to add the following language has been sent:\n`🔽`\n **" + language_name + "**\n`🔼`", value="`⚠️` › A project manager has to add the language manually. This can take up to 1 day. Please be patient. ❤️", inline=False)
-    embed1.set_image(url="https://cdn.discordapp.com/attachments/588044295810973705/955148545248334014/DiscordBotCommandBanners_langrequest.png")
+    embed1.set_image(url="https://cdn.discordapp.com/attachments/1008774599527387216/1030960176083255367/unknown.png")
 
     await interaction.response.send_message(embed=embed1)
 
 
-
-
-@client.slash_command(name="addfile", description="Explanation on how to Upload a File for Translation.") #, guild_ids=testingserverId
+@client.slash_command(name="addfile", description="Explanation on how to Upload a File for Translation.") # /addfile
 async def addfile(
     interaction: Interaction,
 ):
     embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                             description="**TUTORIAL ADDING A FILE**")
-    embed.add_field(name="`▶️` Enter:", value="› ` !addfile `\n \n`▶️` Press the **+** button to the left to attach a file to the message.\n \n`▶️` Send the message.\n \n`⚠️` The name of the **Filename** should something like: \n› ` Modname-Author.supportedformat `\n \n`❓` Supported formats:\nhttps://support.crowdin.com/supported-formats/\n \n`🎞️` **Check out the tutorial video below this message.**", inline=False)
-    embed.set_image(url="https://cdn.discordapp.com/attachments/588044295810973705/955526438835073086/DiscordBotCommandBanners_tutorial.png")
+    embed.add_field(name="`▶️` Enter:", value="› ` !addfile `\n \n`▶️` Press the **+** button to the left to attach a file to the message.\n \n`▶️` Send the message.\n \n`⚠️` The name of the **Filename** should be called something like: \n› ` Modname-Author.supportedformat `\n \n`❓` Supported formats:\nhttps://support.crowdin.com/supported-formats/\n \n`🎞️` **Check out the tutorial video below this message.**", inline=False)
+    embed.set_image(url="https://cdn.discordapp.com/attachments/1008774599527387216/1030960173126275193/unknown.png")
     await interaction.response.send_message(embed=embed)
     await interaction.followup.send(file=nextcord.File("AddingAFileTutorial.webm"))
 
 
-
-
-@client.slash_command(name="updatefile", description="Explanation on how to update a file for translation.") #, guild_ids=testingserverId
+@client.slash_command(name="updatefile", description="Explanation on how to update a file for translation.") # /updatefile
 async def updatefile(
     interaction: Interaction,
 ):
     embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                             description="**TUTORIAL UPDATING A FILE**")
     embed.add_field(name="`▶️` Enter:", value="› ` !addfile `\n \n`▶️` Press the **+** button to the left to attach a file to the message.\n \n`▶️` Send the message.\n \n`▶️` Read the response from the bot and react to the message with ✅ to continue.\n \n`⚠️` The **Filename** has to be the **same name** as the file you want to update!\n`⚠️` You can get a list of all filenames in the project with:\n› ` /listfiles `\n \n`⚠️` The name of the **Filename** should something like: \n› ` Modname-Author.supportedformat `\n \n`❓` Supported formats:\nhttps://support.crowdin.com/supported-formats/\n \n`🎞️` **Check out the tutorial video below this message.**", inline=False)
-    embed.set_image(url="https://cdn.discordapp.com/attachments/588044295810973705/955526438835073086/DiscordBotCommandBanners_tutorial.png")
+    embed.set_image(url="https://cdn.discordapp.com/attachments/1008774599527387216/1030960176720793650/unknown.png")
     await interaction.response.send_message(embed=embed)
     await interaction.followup.send(file=nextcord.File("UpdatingAFileTutorial.webm"))
 
 
-
-
-
-@client.slash_command(name="help", description="Shows all commands for the VintageTranslation Bot.") #, guild_ids=testingserverId
+@client.slash_command(name="help", description="Shows all commands for the VintageTranslation Bot.") # /help
 async def help(
     interaction: Interaction,
 ):
@@ -328,13 +320,12 @@ async def help(
     embed.add_field(name="› ` /listfiles `", value="`▶️` Lists all filenames on the project.", inline=False)
     embed.add_field(name="› ` /project `", value="`▶️` Shares a link to the Crowdin project.", inline=False)
     embed.add_field(name="› ` /wip `", value="`▶️` Shares a link to the Development progress board.", inline=False)
-    embed.set_image(url="https://cdn.discordapp.com/attachments/588044295810973705/953741054677499954/DiscordBotCommandBanners111.png")
+    embed.set_image(url="https://cdn.discordapp.com/attachments/1008774599527387216/1030960174426509374/unknown.png")
 
     await interaction.response.send_message(embed=embed)
 
 
-
-@client.slash_command(name="listfiles", description="List of all filenames.") #, guild_ids=testingserverId
+@client.slash_command(name="filenames", description="List of all filenames.") # /filenames
 async def listfile(
     interaction: Interaction,
 ):
@@ -347,31 +338,20 @@ async def listfile(
 
     names = "\n".join(list0123)
     embed.add_field(name="**Filenames:**", value=names, inline=False)
-    embed.set_image(url="https://cdn.discordapp.com/attachments/588044295810973705/955144349568626748/DiscordBotCommandBanners_filenames.png")
+    embed.set_image(url="https://cdn.discordapp.com/attachments/1008774599527387216/1030960173990301736/unknown.png")
     await interaction.response.send_message(embed=embed)
 
 
-@client.slash_command(name="project", description="Shares a link to the Crowdin project.") #, guild_ids=testingserverId
+@client.slash_command(name="project", description="Shares a link to the Crowdin project.") # /project
 async def project(
     interaction: Interaction,
 ):
     embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                             description="**PROJECT**")
     embed.add_field(name="`🔗` Use the following link to access the Crowdin project:", value="`▶️` https://crowdin.com/project/vintage-story-mods", inline=False)
-    embed.set_image(url="https://cdn.discordapp.com/attachments/588044295810973705/955566317405085756/DiscordBotCommandBanners_project.png")
+    embed.set_image(url="https://cdn.discordapp.com/attachments/1008774599527387216/1030960175600894013/unknown.png")
     await interaction.response.send_message(embed=embed)
 
-
-
-@client.slash_command(name="wip", description="Overview of the Bot development.") #, guild_ids=testingserverId
-async def wip(
-    interaction: Interaction,
-):
-    embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
-                            description="**WORK IN PROGRESS**")
-    embed.add_field(name="`🔗` Use the following link to access the development progress board:", value="`▶️` https://trello.com/b/ZGKWSCZO/vintagetranslationdiscordbot", inline=False)
-    embed.set_image(url="https://cdn.discordapp.com/attachments/588044295810973705/955572836737634384/DiscordBotCommandBanners_wip.png")
-    await interaction.response.send_message(embed=embed)
 
 
 
