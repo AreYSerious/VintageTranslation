@@ -2,15 +2,16 @@ from __future__ import unicode_literals
 import time
 import urllib.request
 
-from nextcord.ext import commands
-from nextcord import *
-import nextcord
+from discord.ext import commands
+from discord import *
+import discord
 
 import crowdin_api.exceptions
 from crowdin_api import CrowdinClient
 
 # Gets the bot token from a seperate file called BotToken.py that looks like this:
 # token = "insert_your_token_here"
+# crowdintoken = "insert_your_crowdintoken_here"
 from BotToken import token
 from BotToken import crowdintoken
 
@@ -76,7 +77,7 @@ def updating_a_file(file_name):
 
 # Discord Bot Setup
 
-client = commands.Bot(command_prefix="!", help_command=None, activity=nextcord.Game(name="/help"))
+client = commands.Bot(command_prefix="!", help_command=None, activity=discord.Game(name="/help"))
 
 
 # Response if ready
@@ -111,13 +112,13 @@ async def addfile(ctx):
     try:
         # Trys to add a file
         adding_a_file(file_name)
-        embed3 = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
+        embed3 = discord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                                 description="**ADDING A FILE**")
         embed3.add_field(
             name="`⏏️` › File upload",
             value="`✅` › Successfully", inline=False)
         embed3.set_image(
-            url="https://cdn.discordapp.com/attachments/588044295810973705/955152835782246400/DiscordBotCommandBanners_fileupload.png")
+            url="https://cdn.discordapp.com/attachments/1008774599527387216/1030960173562462238/unknown.png")
 
         await ctx.send(embed=embed3)
 
@@ -144,7 +145,7 @@ async def addfile(ctx):
             def check(reaction, user):
                 return user == ctx.author and str(reaction.emoji) in valid_reactions
 
-            embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
+            embed = discord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                                     description="**ADDING A FILE**")
             embed.add_field(name="`📁` › The file you tried to add is already existing or another file has the same name.\n`⚠️`\n`🆕` › If you want to add a new file please change the filename to something unique.\n`⚠️`", value="`🆙` › Otherwise if you want to update your existing file react to this message with ✅.", inline=False)
             embed.set_image(
@@ -159,7 +160,7 @@ async def addfile(ctx):
 
             if str(reaction.emoji) == yas:
                 updating_a_file(file_name)
-                embed2 = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
+                embed2 = discord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                                         description="**ADDING A FILE**")
                 embed2.add_field(
                     name="`⏏️` › File updated",
@@ -171,7 +172,7 @@ async def addfile(ctx):
                 time.sleep(10)
                 await ctx.channel.purge(limit=3)
             if str(reaction.emoji) == nay:
-                embed3 = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
+                embed3 = discord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                                         description="**ADDING A FILE**")
                 embed3.add_field(
                     name="`❌`",
@@ -186,7 +187,7 @@ async def addfile(ctx):
         # Second Check: Checks if the Json Syntax is correct.
         elif s.__contains__("Incorrect json in request body. Syntax error"):
             #print("Error: Incorrect json in request body. Syntax error.")
-            embed1 = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
+            embed1 = discord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                                    description="**ADDING A FILE**")
             embed1.add_field(
                 name="`⚠️`** › Error**",
@@ -204,7 +205,7 @@ async def langprogress(interaction: Interaction):
     project_progress = crowdin_client.translation_status.get_project_progress(project_id)
     #print(len(project_progress["data"]))
 
-    embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods", description="**LANGUAGE PROGRESS**")
+    embed = discord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods", description="**LANGUAGE PROGRESS**")
     for x in range(len(project_progress["data"])):
         lang_id = project_progress["data"][x]["data"]["languageId"]
 
@@ -266,7 +267,7 @@ async def language(
     user = await client.fetch_user(myid)
     guild_onserver = interaction.guild.name
 
-    embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods", description="User: " + str(msg_writter))
+    embed = discord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods", description="User: " + str(msg_writter))
     embed.add_field(name="requested the Language: " + language_name + ".", value="Discord-Server: " + guild_onserver, inline=False)
 
     await user.send(embed=embed)
@@ -274,7 +275,7 @@ async def language(
 
 
 
-    embed1 = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
+    embed1 = discord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                           description="**LANGUAGE REQUEST**")
     embed1.add_field(name="`🔣` › Request to add the following language has been sent:\n`🔽`\n **" + language_name + "**\n`🔼`", value="`⚠️` › A project manager has to add the language manually. This can take up to 1 day. Please be patient. ❤️", inline=False)
     embed1.set_image(url="https://cdn.discordapp.com/attachments/1008774599527387216/1030960176083255367/unknown.png")
@@ -286,31 +287,31 @@ async def language(
 async def addfile(
     interaction: Interaction,
 ):
-    embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
+    embed = discord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                             description="**TUTORIAL ADDING A FILE**")
-    embed.add_field(name="`▶️` Enter:", value="› ` !addfile `\n \n`▶️` Press the **+** button to the left to attach a file to the message.\n \n`▶️` Send the message.\n \n`⚠️` The name of the **Filename** should be called something like: \n› ` Modname-Author.supportedformat `\n \n`❓` Supported formats:\nhttps://support.crowdin.com/supported-formats/\n \n`🎞️` **Check out the tutorial video below this message.**", inline=False)
+    embed.add_field(name="`▶️` Enter:", value="› ` !addfile `\n \n`▶️` Press the **+** button to the left to attach a file to the message.\n \n`▶️` Send the message.\n \n`⚠️` The name of the **Filename** should be called something like: \n› ` Modname-Author-v0.0.1.supportedformat `\n \n`❓` Supported formats:\nhttps://support.crowdin.com/supported-formats/\n \n`🎞️` **Check out the tutorial video below this message.**", inline=False)
     embed.set_image(url="https://cdn.discordapp.com/attachments/1008774599527387216/1030960173126275193/unknown.png")
     await interaction.response.send_message(embed=embed)
-    await interaction.followup.send(file=nextcord.File("AddingAFileTutorial.webm"))
+    await interaction.followup.send(file=discord.File("AddingAFileTutorial.webm"))
 
 
 @client.slash_command(name="updatefile", description="Explanation on how to update a file for translation.") # /updatefile
 async def updatefile(
     interaction: Interaction,
 ):
-    embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
+    embed = discord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                             description="**TUTORIAL UPDATING A FILE**")
-    embed.add_field(name="`▶️` Enter:", value="› ` !addfile `\n \n`▶️` Press the **+** button to the left to attach a file to the message.\n \n`▶️` Send the message.\n \n`▶️` Read the response from the bot and react to the message with ✅ to continue.\n \n`⚠️` The **Filename** has to be the **same name** as the file you want to update!\n`⚠️` You can get a list of all filenames in the project with:\n› ` /listfiles `\n \n`⚠️` The name of the **Filename** should something like: \n› ` Modname-Author.supportedformat `\n \n`❓` Supported formats:\nhttps://support.crowdin.com/supported-formats/\n \n`🎞️` **Check out the tutorial video below this message.**", inline=False)
+    embed.add_field(name="`▶️` Enter:", value="› ` !addfile `\n \n`▶️` Press the **+** button to the left to attach a file to the message.\n \n`▶️` Send the message.\n \n`▶️` Read the response from the bot and react to the message with ✅ to continue.\n \n`⚠️` The **Filename** has to be the **same name** as the file you want to update!\n`⚠️` You can get a list of all filenames in the project with:\n› ` /filenames `\n \n`⚠️` The name of the **Filename** should something like: \n› ` Modname-Author-v0.0.1.supportedformat `\n \n`❓` Supported formats:\nhttps://support.crowdin.com/supported-formats/\n \n`🎞️` **Check out the tutorial video below this message.**", inline=False)
     embed.set_image(url="https://cdn.discordapp.com/attachments/1008774599527387216/1030960176720793650/unknown.png")
     await interaction.response.send_message(embed=embed)
-    await interaction.followup.send(file=nextcord.File("UpdatingAFileTutorial.webm"))
+    await interaction.followup.send(file=discord.File("UpdatingAFileTutorial.webm"))
 
 
 @client.slash_command(name="help", description="Shows all commands for the VintageTranslation Bot.") # /help
 async def help(
     interaction: Interaction,
 ):
-    embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
+    embed = discord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                            description="**HELP/COMMANDS**")
     embed.add_field(name="› ` /addfile `", value="`▶️` Explains the usage of the !addfile command and how to upload a file to the project.", inline=False)
     embed.add_field(name="› ` !addfile `", value="`▶️` Uploads a file to the project for translation, can update a file aswell.", inline=False)
@@ -330,7 +331,7 @@ async def listfile(
 ):
 
     files = crowdin_client.source_files.list_files(project_id)
-    embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods", description="**LIST OF FILENAMES**")
+    embed = discord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods", description="**LIST OF FILENAMES**")
     list0123 = []
     for x in range(len(files["data"])):
         list0123.append("`📁` › " + files["data"][x]["data"]["name"])
@@ -345,7 +346,7 @@ async def listfile(
 async def project(
     interaction: Interaction,
 ):
-    embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
+    embed = discord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                             description="**PROJECT**")
     embed.add_field(name="`🔗` Use the following link to access the Crowdin project:", value="`▶️` https://crowdin.com/project/vintage-story-mods", inline=False)
     embed.set_image(url="https://cdn.discordapp.com/attachments/1008774599527387216/1030960175600894013/unknown.png")
