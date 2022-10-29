@@ -1,6 +1,11 @@
 from __future__ import unicode_literals
 import time
 import urllib.request
+import os
+import wget
+import zipfile
+import glob
+import shutil
 
 from nextcord.ext import commands
 from nextcord import *
@@ -20,7 +25,7 @@ from BotToken import crowdintoken
 # https://nextcord.com/api/oauth2/authorize?client_id=949725454477168661&permissions=140123630656&scope=applications.commands%20bot
 
 
-
+testingserverid = [910242831103320064]
 
 class FirstCrowdinClient(CrowdinClient):
     TOKEN = crowdintoken
@@ -352,7 +357,97 @@ async def project(
     embed.set_image(url="https://cdn.nextcordapp.com/attachments/1008774599527387216/1030960175600894013/unknown.png")
     await interaction.response.send_message(embed=embed)
 
+@client.slash_command(name="build", description="Builds the Crowdin project.") # /build
+async def build(
+    interaction: Interaction,
+    filename: str = SlashOption(description="Your Filename", required=True)
+):
+
+    #filename = filename +".json"
+
+    project_progress = crowdin_client.translation_status.get_project_progress(project_id)
+    language_id_list = []
+    for x in range(len(project_progress["data"])):
+        lang_id = project_progress["data"][x]["data"]["languageId"]
+        language_id_list.append(lang_id)
 
 
+    list_files = crowdin_client.source_files.list_files(projectId=project_id)
+    #print(list_files)
+
+    files = crowdin_client.source_files.list_files(project_id)
+    file_names = []
+    file_ids = []
+    for x in range(len(files["data"])):
+        file_names.append(files["data"][x]["data"]["name"])
+        file_ids.append(files["data"][x]["data"]["id"])
+    print(file_names)
+    #print(file_ids)
+
+    try:
+        index_file_names = file_names.index(filename)
+    except:
+        print("Issue with the Filename. Couldn't find it in the list of files. Maybe inputed the wron name.")
+
+    actual_file_id = file_ids[index_file_names]
+    #print(actual_file_id)
+
+    embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
+                           description="**Build**")
+    embed.add_field(name="`🔗` Building the uptodate Project and downloading your mod language files...",
+                    value="`▶️` This takes up to 10 seconds pls be patient.", inline=False)
+    await interaction.response.send_message(embed=embed)
+
+    build = crowdin_client.translations.build_project_translation(projectId=project_id, request_data={"skipUntranslatedStrings": False, "skipUntranslatedFiles": True, "exportApprovedOnly": False})
+    time.sleep(8)
+
+    builds_list = crowdin_client.translations.list_project_builds(projectId=project_id)
+    #print(builds_list)
+    latest_build = builds_list['data'][0]['data']['id']
+
+
+
+
+    download = crowdin_client.translations.download_project_translations(projectId=project_id, buildId=latest_build)
+    download_url = download["data"]["url"]
+    #print(download_url)
+
+    downloaded_zip = wget.download(download_url)
+    #print(downloaded_zip)
+
+    with zipfile.ZipFile(downloaded_zip, 'r') as zip_ref:
+        zip_ref.extractall("unzipped")
+
+
+    try:
+        os.mkdir("export")
+    except:
+        shutil.rmtree("export")
+        os.mkdir("export")
+        print("Error: Could not create export folder.")
+
+
+
+    for x in range(len(project_progress["data"])):
+        specific_filepath = glob.glob("unzipped/"+ language_id_list[x] +"/" + filename)
+        #print("Specific Filepath: " + str(specific_filepath))
+        if specific_filepath == []:
+            pass # is Empty
+        else:
+            shutil.copyfile(specific_filepath[0], "export/" + language_id_list[x] + ".json")
+
+    shutil.make_archive(filename[:-5], 'zip', "export")
+
+    await interaction.followup.send(file=nextcord.File(filename[:-5] + ".zip"))
+
+
+
+
+    time.sleep(1)
+    shutil.rmtree("export")
+    shutil.rmtree("unzipped")
+    os.remove(downloaded_zip)
+    os.remove(filename[:-5] + ".zip")
+    print("Finished Building and Downloading.")
 
 client.run(token)
