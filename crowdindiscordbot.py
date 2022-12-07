@@ -294,7 +294,7 @@ async def addfile(
 ):
     embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                             description="**TUTORIAL ADDING A FILE**")
-    embed.add_field(name="`▶️` Enter:", value="› ` !addfile `\n \n`▶️` Press the **+** button to the left to attach a file to the message.\n \n`▶️` Send the message.\n \n`⚠️` The name of the **Filename** should be called something like: \n› ` Modname-Author-v0.0.1.supportedformat `\n \n`❓` Supported formats:\nhttps://support.crowdin.com/supported-formats/\n \n`🎞️` **Check out the tutorial video below this message.**", inline=False)
+    embed.add_field(name="`▶️` Enter:", value="› `!addfile` (no space after the command) \n \n`▶️` Press the **+** button to the left to attach a file to the message.\n \n`▶️` Send the message.\n \n`⚠️` The name of the **Filename** should be called something like: \n› ` Modname-Author.supportedformat `\n \n`❓` Supported formats:\nhttps://support.crowdin.com/supported-formats/\n \n`🎞️` **Check out the tutorial video below this message.**", inline=False)
     embed.set_image(url="https://i.imgur.com/I4jNUO7.png")
     await interaction.response.send_message(embed=embed)
     await interaction.followup.send(file=nextcord.File("AddingAFileTutorial.webm"))
@@ -306,7 +306,7 @@ async def updatefile(
 ):
     embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                             description="**TUTORIAL UPDATING A FILE**")
-    embed.add_field(name="`▶️` Enter:", value="› ` !addfile `\n \n`▶️` Press the **+** button to the left to attach a file to the message.\n \n`▶️` Send the message.\n \n`▶️` Read the response from the bot and react to the message with ✅ to continue.\n \n`⚠️` The **Filename** has to be the **same name** as the file you want to update!\n`⚠️` You can get a list of all filenames in the project with:\n› ` /filenames `\n \n`⚠️` The name of the **Filename** should something like: \n› ` Modname-Author-v0.0.1.supportedformat `\n \n`❓` Supported formats:\nhttps://support.crowdin.com/supported-formats/\n \n`🎞️` **Check out the tutorial video below this message.**", inline=False)
+    embed.add_field(name="`▶️` Enter:", value="› `!addfile` (no space after the command) \n \n`▶️` Press the **+** button to the left to attach a file to the message.\n \n`▶️` Send the message.\n \n`▶️` Read the response from the bot and react to the message with ✅ to continue.\n \n`⚠️` The **Filename** has to be the **same name** as the file you want to update!\n`⚠️` You can get a list of all filenames in the project with:\n› ` /filenames `\n \n`⚠️` The name of the **Filename** should something like: \n› ` Modname-Author.supportedformat `\n \n`❓` Supported formats:\nhttps://support.crowdin.com/supported-formats/\n \n`🎞️` **Check out the tutorial video below this message.**", inline=False)
     embed.set_image(url="https://i.imgur.com/SP4FfcN.png")
     await interaction.response.send_message(embed=embed)
     await interaction.followup.send(file=nextcord.File("UpdatingAFileTutorial.webm"))
@@ -321,6 +321,7 @@ async def help(
     embed.add_field(name="› ` /addfile `", value="`▶️` Explains the usage of the !addfile command and how to upload a file to the project.", inline=False)
     embed.add_field(name="› ` !addfile `", value="`▶️` Uploads a file to the project for translation, can update a file aswell.", inline=False)
     embed.add_field(name="› ` /updatefile `", value="`▶️` Explains the usage of the !addfile command and how to update a file to the project.", inline=False)
+    embed.add_field(name="› ` /build `", value="`▶️` Enter your filename to get a .zip with your mods translated files.", inline=False)
     embed.add_field(name="› ` /progress `", value="`▶️` Shows the translation progress of each language.", inline=False)
     embed.add_field(name="› ` /reqlanguage `", value="`▶️` Sends a request to add a language to the project.", inline=False)
     embed.add_field(name="› ` /filenames `", value="`▶️` Lists all filenames on the project.", inline=False)
