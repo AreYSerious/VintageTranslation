@@ -123,12 +123,12 @@ async def addfile(ctx):
             name="`⏏️` › File upload",
             value="`✅` › Successfully", inline=False)
         embed3.set_image(
-            url="https://cdn.nextcordapp.com/attachments/1008774599527387216/1030960173562462238/unknown.png")
+            url="https://i.imgur.com/mZLV5Ld.png")
 
         await ctx.send(embed=embed3)
 
-        time.sleep(5)
-        await ctx.channel.purge(limit=2)
+        time.sleep(1)
+        #await ctx.channel.purge(limit=2)
 
     except crowdin_api.exceptions.ValidationError as err:
         s = str(err)
@@ -154,7 +154,7 @@ async def addfile(ctx):
                                     description="**ADDING A FILE**")
             embed.add_field(name="`📁` › The file you tried to add is already existing or another file has the same name.\n`⚠️`\n`🆕` › If you want to add a new file please change the filename to something unique.\n`⚠️`", value="`🆙` › Otherwise if you want to update your existing file react to this message with ✅.", inline=False)
             embed.set_image(
-                url="https://cdn.nextcordapp.com/attachments/1008774599527387216/1030960173562462238/unknown.png")
+                url="https://i.imgur.com/29QVHgW.png")
             msg = await ctx.send(embed=embed)
             await msg.add_reaction('✅')
             await msg.add_reaction('❌')
@@ -171,7 +171,7 @@ async def addfile(ctx):
                     name="`⏏️` › File updated",
                     value="`✅` › Successfully", inline=False)
                 embed2.set_image(
-                    url="https://cdn.nextcordapp.com/attachments/1008774599527387216/1030960173562462238/unknown.png")
+                    url="https://i.imgur.com/mZLV5Ld.png")
                 await ctx.send(embed=embed2)
 
                 time.sleep(10)
@@ -183,10 +183,10 @@ async def addfile(ctx):
                     name="`❌`",
                     value="**Aborting...**", inline=False)
                 embed3.set_image(
-                    url="https://cdn.nextcordapp.com/attachments/1008774599527387216/1030960173562462238/unknown.png")
+                    url="https://i.imgur.com/MGzs1Sh.png")
                 await ctx.send(embed=embed3)
-                time.sleep(3)
-                await ctx.channel.purge(limit=3)
+                time.sleep(1)
+                #await ctx.channel.purge(limit=3)
 
 
         # Second Check: Checks if the Json Syntax is correct.
@@ -198,7 +198,7 @@ async def addfile(ctx):
                 name="`⚠️`** › Error**",
                 value="`⚠️` › Incorrect json in request body. Syntax error!", inline=False)
             embed1.set_image(
-                url="https://cdn.nextcordapp.com/attachments/1008774599527387216/1030961933140111371/ERROR.png")
+                url="https://i.imgur.com/MGzs1Sh.png")
             await ctx.send(embed=embed1)
 
 
@@ -255,7 +255,7 @@ async def langprogress(interaction: Interaction):
 
 
         embed.add_field(name=lang_id, value=str(trans_prog) + "%", inline=False)
-    embed.set_image(url="https://cdn.nextcordapp.com/attachments/1008774599527387216/1030960175026294875/unknown.png")
+    embed.set_image(url="https://i.imgur.com/rDj32iY.png")
 
     await interaction.response.send_message(embed=embed)
 
@@ -283,7 +283,7 @@ async def language(
     embed1 = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                           description="**LANGUAGE REQUEST**")
     embed1.add_field(name="`🔣` › Request to add the following language has been sent:\n`🔽`\n **" + language_name + "**\n`🔼`", value="`⚠️` › A project manager has to add the language manually. This can take up to 1 day. Please be patient. ❤️", inline=False)
-    embed1.set_image(url="https://cdn.nextcordapp.com/attachments/1008774599527387216/1030960176083255367/unknown.png")
+    embed1.set_image(url="https://i.imgur.com/f5pmpzU.png")
 
     await interaction.response.send_message(embed=embed1)
 
@@ -295,7 +295,7 @@ async def addfile(
     embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                             description="**TUTORIAL ADDING A FILE**")
     embed.add_field(name="`▶️` Enter:", value="› ` !addfile `\n \n`▶️` Press the **+** button to the left to attach a file to the message.\n \n`▶️` Send the message.\n \n`⚠️` The name of the **Filename** should be called something like: \n› ` Modname-Author-v0.0.1.supportedformat `\n \n`❓` Supported formats:\nhttps://support.crowdin.com/supported-formats/\n \n`🎞️` **Check out the tutorial video below this message.**", inline=False)
-    embed.set_image(url="https://cdn.nextcordapp.com/attachments/1008774599527387216/1030960173126275193/unknown.png")
+    embed.set_image(url="https://i.imgur.com/I4jNUO7.png")
     await interaction.response.send_message(embed=embed)
     await interaction.followup.send(file=nextcord.File("AddingAFileTutorial.webm"))
 
@@ -307,7 +307,7 @@ async def updatefile(
     embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                             description="**TUTORIAL UPDATING A FILE**")
     embed.add_field(name="`▶️` Enter:", value="› ` !addfile `\n \n`▶️` Press the **+** button to the left to attach a file to the message.\n \n`▶️` Send the message.\n \n`▶️` Read the response from the bot and react to the message with ✅ to continue.\n \n`⚠️` The **Filename** has to be the **same name** as the file you want to update!\n`⚠️` You can get a list of all filenames in the project with:\n› ` /filenames `\n \n`⚠️` The name of the **Filename** should something like: \n› ` Modname-Author-v0.0.1.supportedformat `\n \n`❓` Supported formats:\nhttps://support.crowdin.com/supported-formats/\n \n`🎞️` **Check out the tutorial video below this message.**", inline=False)
-    embed.set_image(url="https://cdn.nextcordapp.com/attachments/1008774599527387216/1030960176720793650/unknown.png")
+    embed.set_image(url="https://i.imgur.com/SP4FfcN.png")
     await interaction.response.send_message(embed=embed)
     await interaction.followup.send(file=nextcord.File("UpdatingAFileTutorial.webm"))
 
@@ -325,7 +325,7 @@ async def help(
     embed.add_field(name="› ` /reqlanguage `", value="`▶️` Sends a request to add a language to the project.", inline=False)
     embed.add_field(name="› ` /filenames `", value="`▶️` Lists all filenames on the project.", inline=False)
     embed.add_field(name="› ` /project `", value="`▶️` Shares a link to the Crowdin project.", inline=False)
-    embed.set_image(url="https://cdn.nextcordapp.com/attachments/1008774599527387216/1030960174426509374/unknown.png")
+    embed.set_image(url="https://i.imgur.com/QjbOEQR.png")
 
     await interaction.response.send_message(embed=embed)
 
@@ -343,7 +343,7 @@ async def listfile(
 
     names = "\n".join(list0123)
     embed.add_field(name="**Filenames:**", value=names, inline=False)
-    embed.set_image(url="https://cdn.nextcordapp.com/attachments/1008774599527387216/1030960173990301736/unknown.png")
+    embed.set_image(url="https://i.imgur.com/oYjqgT7.png")
     await interaction.response.send_message(embed=embed)
 
 
@@ -354,8 +354,9 @@ async def project(
     embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
                             description="**PROJECT**")
     embed.add_field(name="`🔗` Use the following link to access the Crowdin project:", value="`▶️` https://crowdin.com/project/vintage-story-mods", inline=False)
-    embed.set_image(url="https://cdn.nextcordapp.com/attachments/1008774599527387216/1030960175600894013/unknown.png")
+    embed.set_image(url="https://i.imgur.com/HENnP5W.png")
     await interaction.response.send_message(embed=embed)
+
 
 @client.slash_command(name="build", description="Builds the Crowdin project.") # /build
 async def build(
@@ -381,13 +382,19 @@ async def build(
     for x in range(len(files["data"])):
         file_names.append(files["data"][x]["data"]["name"])
         file_ids.append(files["data"][x]["data"]["id"])
-    print(file_names)
+    #print(file_names)
     #print(file_ids)
 
     try:
         index_file_names = file_names.index(filename)
     except:
-        print("Issue with the Filename. Couldn't find it in the list of files. Maybe inputed the wron name.")
+        print("Issue with the Filename. Couldn't find it in the list of files. Maybe inputed the wrong name.")
+        filenameissue_embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods",
+                               description="**Build**")
+        filenameissue_embed.add_field(name="`⚠️` ! Incorrect filename !",
+                        value="`▶️` Use /filenames to see all available filenames.", inline=False)
+        filenameissue_embed.set_image(url="https://i.imgur.com/MGzs1Sh.png")
+        await interaction.response.send_message(embed=filenameissue_embed)
 
     actual_file_id = file_ids[index_file_names]
     #print(actual_file_id)
@@ -396,6 +403,7 @@ async def build(
                            description="**Build**")
     embed.add_field(name="`🔗` Building the uptodate Project and downloading your mod language files...",
                     value="`▶️` This takes up to 10 seconds pls be patient.", inline=False)
+    embed.set_image(url="https://i.imgur.com/axpMy0D.png")
     await interaction.response.send_message(embed=embed)
 
     build = crowdin_client.translations.build_project_translation(projectId=project_id, request_data={"skipUntranslatedStrings": False, "skipUntranslatedFiles": True, "exportApprovedOnly": False})
