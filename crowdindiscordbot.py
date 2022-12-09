@@ -407,7 +407,7 @@ async def build(
     embed.set_image(url="https://i.imgur.com/axpMy0D.png")
     await interaction.response.send_message(embed=embed)
 
-    build = crowdin_client.translations.build_project_translation(projectId=project_id, request_data={"skipUntranslatedStrings": False, "skipUntranslatedFiles": False, "exportApprovedOnly": False})
+    build = crowdin_client.translations.build_project_translation(projectId=project_id, request_data={"skipUntranslatedStrings": True, "skipUntranslatedFiles": False, "exportApprovedOnly": False})
     #time.sleep(10)
 
     builds_list = crowdin_client.translations.list_project_builds(projectId=project_id)
