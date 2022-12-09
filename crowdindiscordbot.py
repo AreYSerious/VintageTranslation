@@ -470,6 +470,7 @@ async def build(
 
     directoryx = "export"
     for filenamex in glob.iglob(f'{directoryx}/*'):
+        # Windows
         if filenamex == "export\es-ES.json":
             os.rename(filenamex, "export\es-es.json")
         if filenamex == "export\pt-BR.json":
@@ -478,6 +479,16 @@ async def build(
             os.rename(filenamex, "export\sv-se.json")
         if filenamex == "export\zh-CN.json":
             os.rename(filenamex, "export\zh-cn.json")
+        # Linux
+        if filenamex == "export/es-ES.json":
+            os.rename(filenamex, "export/es-es.json")
+        if filenamex == "export/pt-BR.json":
+            os.rename(filenamex, "export\pt-br.json")
+        if filenamex == "export/sv-SE.json":
+            os.rename(filenamex, "export/sv-se.json")
+        if filenamex == "export/zh-CN.json":
+            os.rename(filenamex, "export/zh-cn.json")
+
 
     for filenamex in glob.iglob(f'{directoryx}/*'):
         #print(filenamex)
