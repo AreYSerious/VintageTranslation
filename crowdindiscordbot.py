@@ -407,8 +407,8 @@ async def build(
     embed.set_image(url="https://i.imgur.com/axpMy0D.png")
     await interaction.response.send_message(embed=embed)
 
-    build = crowdin_client.translations.build_project_translation(projectId=project_id, request_data={"skipUntranslatedStrings": False, "skipUntranslatedFiles": True, "exportApprovedOnly": False})
-    time.sleep(8)
+    build = crowdin_client.translations.build_project_translation(projectId=project_id, request_data={"skipUntranslatedStrings": False, "skipUntranslatedFiles": False, "exportApprovedOnly": False})
+    #time.sleep(10)
 
     builds_list = crowdin_client.translations.list_project_builds(projectId=project_id)
     #print(builds_list)
@@ -417,7 +417,27 @@ async def build(
 
 
 
-    download = crowdin_client.translations.download_project_translations(projectId=project_id, buildId=latest_build)
+    #download = crowdin_client.translations.download_project_translations(projectId=project_id, buildId=latest_build)
+    #print(download)
+
+    counter1 = 20
+    val1 = False
+    while val1 == False:
+        download = crowdin_client.translations.download_project_translations(projectId=project_id, buildId=latest_build)
+        print(download)
+        counter1 = counter1 - 1
+        if counter1 == 0:
+            val1 = True
+        try:
+            download_url = download["data"]["url"]
+            val1 = True
+        except:
+            time.sleep(2)
+
+
+
+
+
     download_url = download["data"]["url"]
     #print(download_url)
 
