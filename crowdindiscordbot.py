@@ -461,7 +461,7 @@ async def build(
 
     for x in range(len(project_progress["data"])):
         specific_filepath = glob.glob("unzipped/"+ language_id_list[x] +"/" + filename)
-        print("Specific Filepath: " + str(specific_filepath))
+        #print("Specific Filepath: " + str(specific_filepath))
         if specific_filepath == []:
             pass # is Empty
         else:
