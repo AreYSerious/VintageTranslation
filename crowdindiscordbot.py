@@ -1,4 +1,6 @@
 from __future__ import unicode_literals
+
+import json
 import time
 import urllib.request
 import os
@@ -424,7 +426,7 @@ async def build(
     val1 = False
     while val1 == False:
         download = crowdin_client.translations.download_project_translations(projectId=project_id, buildId=latest_build)
-        print(download)
+        #print(download)
         counter1 = counter1 - 1
         if counter1 == 0:
             val1 = True
@@ -459,11 +461,33 @@ async def build(
 
     for x in range(len(project_progress["data"])):
         specific_filepath = glob.glob("unzipped/"+ language_id_list[x] +"/" + filename)
-        #print("Specific Filepath: " + str(specific_filepath))
+        print("Specific Filepath: " + str(specific_filepath))
         if specific_filepath == []:
             pass # is Empty
         else:
             shutil.copyfile(specific_filepath[0], "export/" + language_id_list[x] + ".json")
+
+
+    directoryx = "export"
+    for filenamex in glob.iglob(f'{directoryx}/*'):
+        if filenamex == "export\es-ES.json":
+            os.rename(filenamex, "export\es-es.json")
+        if filenamex == "export\pt-BR.json":
+            os.rename(filenamex, "export\pt-br.json")
+        if filenamex == "export\sv-SE.json":
+            os.rename(filenamex, "export\sv-se.json")
+        if filenamex == "export\zh-CN.json":
+            os.rename(filenamex, "export\zh-cn.json")
+
+    for filenamex in glob.iglob(f'{directoryx}/*'):
+        #print(filenamex)
+        filex = open(filenamex, encoding="utf8")
+        filex_content = json.load(filex)
+        #print(filex_content)
+        filex.close()
+        if filex_content == {}:
+            os.remove(filenamex)
+
 
     shutil.make_archive(filename[:-5], 'zip', "export")
 
