@@ -1,21 +1,6 @@
-## Dependencies:
-
 ### Discord Invite Link
 
 [Discord Invite Link](https://discord.com/api/oauth2/authorize?client_id=949725454477168661&permissions=140123630656&scope=applications.commands%20bot)
-
-### Crowdin Python Client V2
-```sh
-pip install crowdin-api-client
-```
-https://github.com/crowdin/crowdin-api-client-python
-
-
-### Nextcord
-```sh
-py -3 -m pip install -U nextcord
-```
-https://github.com/nextcord/nextcord
 
 
 ## Commands
@@ -68,15 +53,3 @@ Sends a request to add a language to the project.
 Lists all filenames on the project.
 
 ![listfiles](https://i.imgur.com/PBWWbMm.png)
-
-
-
-## Extra Commands
-
-### /project
-
-Shares a link to the crowdin project.
-
-### /wip
-
-Shares a link to the development progress board.
