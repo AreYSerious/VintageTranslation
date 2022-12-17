@@ -26,6 +26,17 @@ Example
 
 ![tinywow_Renaming_9893401](https://user-images.githubusercontent.com/100879715/208252127-65e68aad-599e-4b37-b861-f505f7cbc9e6.gif)
 
+Now its time to use the first command on the bot.
+
+Open discord and use a textchannel of your choice. (most servers have dedicated channels for bot commands)
+
+The command you want to use for uploading a file is called `!addfile`
+
+Enter `!addfile` and click on the `+` to the left.
+
+Now select your renamed language file `Modname-Author.json` and send your message.
+
+![tinywow_uploading_9894301](https://user-images.githubusercontent.com/100879715/208253233-7ace73e4-0697-4ef9-a8b7-f1139521e66d.gif)
 
 
 ## Commands
