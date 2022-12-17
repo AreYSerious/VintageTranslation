@@ -38,6 +38,7 @@ Now select your renamed language file `Modname-Author.json` and send your messag
 
 ![tinywow_uploading_9894301](https://user-images.githubusercontent.com/100879715/208253233-7ace73e4-0697-4ef9-a8b7-f1139521e66d.gif)
 
+Nice now your sourcefile is on the project and can be translated by anyone.
 
 ## Commands
 
