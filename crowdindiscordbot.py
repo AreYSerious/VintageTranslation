@@ -339,6 +339,7 @@ async def listfile(
 ):
 
     files = crowdin_client.source_files.list_files(project_id)
+    #print(files)
     embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods", description="**LIST OF FILENAMES**")
     list0123 = []
     for x in range(len(files["data"])):
