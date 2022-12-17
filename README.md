@@ -14,7 +14,10 @@ Link to a discord server that has the command: [VSWorks](https://discord.gg/7z5m
 
 Get your mods english language file.
 
-![tinywow_extract langfile_9893062](https://user-images.githubusercontent.com/100879715/208251715-7efb7c7e-a6c1-4c31-9136-103ac8962b06.gif)
+
+https://user-images.githubusercontent.com/100879715/208253780-65f459a1-cb23-40ef-b54e-24433dae87c7.mp4
+
+
 
 Rename your en.json file to contain your modid and modauthor name.
 
@@ -24,7 +27,10 @@ Example
 
 `Backpackpackstandard-Mr1k3.json`
 
-![tinywow_Renaming_9893401](https://user-images.githubusercontent.com/100879715/208252127-65e68aad-599e-4b37-b861-f505f7cbc9e6.gif)
+
+https://user-images.githubusercontent.com/100879715/208253772-b644414f-59e1-422a-905b-0259e8deb063.mp4
+
+
 
 Now its time to use the first command on the bot.
 
@@ -36,9 +42,17 @@ Enter `!addfile` and click on the `+` to the left.
 
 Now select your renamed language file `Modname-Author.json` and send your message.
 
-![tinywow_uploading_9894301](https://user-images.githubusercontent.com/100879715/208253233-7ace73e4-0697-4ef9-a8b7-f1139521e66d.gif)
+
+
+https://user-images.githubusercontent.com/100879715/208253743-06bf4b1d-8893-4817-946a-70565c94d610.mp4
+
+
 
 Nice now your sourcefile is on the project and can be translated by anyone.
+
+
+
+
 
 ## Commands
 
