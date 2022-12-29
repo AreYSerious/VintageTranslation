@@ -1,4 +1,33 @@
-## Modder Guide
+## General
+
+The source files on the [Crowdin project](https://crowdin.com/project/vintage-story-mods) are getting updated daily.
+That means the `en.json` files from the latest released or updated mods are getting pulled from the official [Moddb](https://mods.vintagestory.at/).
+So the next time you update or release your mod they will get uploaded automatically.
+
+The translated files can be grabbed by mod authors from this [Dropbox Page](https://www.dropbox.com/scl/fo/q7u3idxz3edsytki8n6m4/h?dl=0&rlkey=mc3xn22a49qwrjp5cmx1he0ay). (The up-to-date translations are being updated daily as well. No LIVE updates)
+
+### Restrictions
+
+
+
+
+
+
+
+
+
+## Guide for Modders
+
+WIP
+
+
+
+
+
+
+
+
+## DiscordBot Guide
 
 Shows how a modder can upload his mods sourcefile (en).
 
