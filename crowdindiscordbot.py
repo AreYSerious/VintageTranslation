@@ -11,6 +11,7 @@ import shutil
 
 from nextcord.ext import commands
 from nextcord import *
+from nextcord.ext import tasks
 import nextcord
 
 import crowdin_api.exceptions
@@ -35,7 +36,7 @@ class FirstCrowdinClient(CrowdinClient):
     RETRY_DELAY = 0.1  # Optional, sets the delay between failed requests
     MAX_RETRIES = 5  # Optional, sets the number of retries
     HEADERS = {"Some-Header": ""}  # Optional, sets additional http request headers
-    PAGE_SIZE = 25  # Optional, sets default page size
+    PAGE_SIZE = 500  # Optional, sets default page size
 
 crowdin_client = FirstCrowdinClient()
 
@@ -92,6 +93,7 @@ client = commands.Bot(command_prefix="!", help_command=None, activity=nextcord.G
 @client.event
 async def on_ready():
     print("Bot online.")
+
 
 
 
@@ -338,8 +340,8 @@ async def listfile(
     interaction: Interaction,
 ):
 
-    files = crowdin_client.source_files.list_files(project_id)
-    #print(files)
+    files = crowdin_client.source_files.list_files(project_id, limit=499)
+    print(files)
     embed = nextcord.Embed(title="Crowdin Project", url="https://crowdin.com/project/vintage-story-mods", description="**LIST OF FILENAMES**")
     list0123 = []
     for x in range(len(files["data"])):
