@@ -22,7 +22,10 @@ Manual uploads or updates are still possible with the Discord bot. More on that 
 ### Uploading translations
 
 If your mod has already translated files you need to manually add them to the crowdin project.
-Tutorial: WIP
+
+The following Tutorial shows how that can be done:
+[Uploading existing translations.webm](https://user-images.githubusercontent.com/100879715/220735463-7fa45bda-444f-42bb-9a9b-102de2eeea36.webm)
+
 
 ### Restrictions
 
