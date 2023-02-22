@@ -7,6 +7,7 @@
 
 - [General](#general)
 - [Uploading translations](#uploading-translations)
+- [Downloading Translations](#downloading-translations)
 - [Restrictions](#restrictions)
 
 ## General
@@ -29,7 +30,10 @@ The following Tutorial shows how that can be done:
 https://user-images.githubusercontent.com/100879715/220736483-340a2165-9c1f-4a77-825c-8ce34a12b02b.mp4
 
 
+### Downloading translations
 
+If you want to update your mod and want to use the uptodate translations head over to this [Dropbox](https://www.dropbox.com/scl/fo/q7u3idxz3edsytki8n6m4/h?dl=0&rlkey=mc3xn22a49qwrjp5cmx1he0ay).
+You can download the translated files for each mod.
 
 ### Restrictions
 
