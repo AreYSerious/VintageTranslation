@@ -41,15 +41,3 @@ You can download the translated files for each mod.
 - Daily updates no LIVE updates.
 
 
-
-
-
-
-## Modders TODO List
-
-WIP
-
-
-
-
-
