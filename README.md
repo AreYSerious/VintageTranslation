@@ -18,8 +18,6 @@ So the next time you update or release your mod they will get uploaded automatic
 
 The translated files can be grabbed by mod authors from this [Dropbox page](https://www.dropbox.com/scl/fo/q7u3idxz3edsytki8n6m4/h?dl=0&rlkey=mc3xn22a49qwrjp5cmx1he0ay). (The up-to-date translations are being updated daily as well. No LIVE updates)
 
-Manual uploads or updates are still possible with the Discord bot. More on that later.
-
 ### Uploading translations
 
 If your mod has already translated files you need to manually add them to the crowdin project.
