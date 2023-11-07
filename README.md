@@ -85,3 +85,7 @@ Invoke-Webrequest -Uri "https://dl.dropboxusercontent.com/scl/fo/q7u3idxz3edsytk
 Expand-Archive -Force -Path $downloadfile -DestinationPath $downloadpath;
 Remove-Item -Path $downloadfile; 
 ```
+
+by [@Darkhekromant](https://github.com/DArkHekRoMaNT)
+
+https://github.com/DArkHekRoMaNT/VSMods/blob/de45ee089482c20ae852369571b4708af6baf78d/Directory.Build.targets#L161
