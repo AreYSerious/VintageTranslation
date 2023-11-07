@@ -48,7 +48,7 @@ by [@Gerste](https://github.com/G3rste)
 I just did a small powershell skript to autodownload translations from crowdin directly into you project.
 It automatically reads out all necessary data for downloading from your modinfo file (You might need to adjust the paths depending on where the script lies)
 Feel free to steal if anybody is interested:
-```
+```powershell
 $modinfo=Get-Content -Path resources\modinfo.json | ConvertFrom-Json
 $modid=$modinfo.modid;
 $authors=$modinfo.authors -Join '';
