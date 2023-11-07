@@ -62,6 +62,8 @@ The Link structure looks like this:
 
 So you will need to find your id for your mod. Which you can easily see in the url if you go into the editor for a random language for your mods file. And adjust that accordingly.
 
+If you set up the link like above, your possible translators will get right into the editor and be able to select their lang and start translating <3
+
 ![image](https://github.com/AreYSerious/VintageTranslation/assets/100879715/9a092a13-cb1d-435e-9da7-6097cac60031)
 
 
