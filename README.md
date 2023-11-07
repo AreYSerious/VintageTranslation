@@ -3,12 +3,15 @@
 - [Crowdin](https://crowdin.com/project/vintage-story-mods) for translating.
 - [Dropbox](https://www.dropbox.com/scl/fo/q7u3idxz3edsytki8n6m4/h?dl=0&rlkey=mc3xn22a49qwrjp5cmx1he0ay) for grabbing the translated files.
 
-## Table of Content
+## Table of content
 
 - [General](#general)
 - [Uploading translations](#uploading-translations)
-- [Downloading Translations](#downloading-translations)
+- [Downloading translations](#downloading-translations)
 - [Restrictions](#restrictions)
+- [Possible Moddb integration](#possible-moddb-integration)
+- [Useful scripts](#useful-scripts)
+
 
 ## General
 
@@ -39,6 +42,28 @@ You can download the translated files for each mod.
 - only `en.json` files from the modid folder are being uploaded. Example: `\assets\modid\lang\en.json` **NOT** `\assets\game\lang\en.json`
 - the `en.json` file has to be correct [Json](https://www.json.org/json-en.html) syntax. **NOT** [Json5](https://json5.org/) which the game supports but not Crowdin.
 - Daily updates no LIVE updates.
+
+### Possible Moddb integration
+![image](https://github.com/AreYSerious/VintageTranslation/assets/100879715/130a33c4-ee7c-44e2-b0b5-f021474be71a)
+
+To reproduce this use the following image:
+
+![image](https://github.com/AreYSerious/VintageTranslation/assets/100879715/b744a853-6a4a-496a-9298-f90d6f510415)
+
+You can also use my reference here and use the same witdh and height:
+
+```https://i.imgur.com/8vVoFzG.png```
+
+![image](https://github.com/AreYSerious/VintageTranslation/assets/100879715/fa3a8384-be23-41df-b11d-7bc894cd3746)
+
+The Link structure looks like this:
+
+```https://crowdin.com/translate/vintage-story-mods/329```
+
+So you will need to find your id for your mod. Which you can easily see in the url if you go into the editor for a random language for your mods file. And adjust that accordingly.
+
+![image](https://github.com/AreYSerious/VintageTranslation/assets/100879715/9a092a13-cb1d-435e-9da7-6097cac60031)
+
 
 
 ### Useful scripts
