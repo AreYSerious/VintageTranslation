@@ -40,7 +40,6 @@ You can download the translated files for each mod.
 
 - manual one time uploading of already translated files via [Crowdin](https://crowdin.com/project/vintage-story-mods) for modauthors.
 - only `en.json` files from the modid folder are being uploaded. Example: `\assets\modid\lang\en.json` **NOT** `\assets\game\lang\en.json`
-- the `en.json` file has to be correct [Json](https://www.json.org/json-en.html) syntax. **NOT** [Json5](https://json5.org/) which the game supports but not Crowdin.
 - Daily updates no LIVE updates.
 
 ### Possible Moddb integration
