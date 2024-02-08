@@ -1,244 +1,241 @@
+### Notes:
+### Revisited: Added Json5 compatibility
+
+
 import json
+import json5
 import time
-import traceback
 import datetime
 import requests
 import os
 import wget
 import zipfile
 import shutil
-from distutils.dir_util import copy_tree
+import traceback
 
-mode = "2 days" #2 days
-setting_amount_of_mods = "endless"
-
-
-
-def del_folder(foldername):
-    try:
-        shutil.rmtree(foldername)
-    except:
-        ""
-
-def make_folder(foldername):
-    try:
-        os.mkdir(foldername)
-    except:
-        ""
+# Configuration
+BASE_URL = "http://mods.vintagestory.at/api"
+DOWNLOAD_BASE_URL = "https://mods.vintagestory.at/download?fileid="
+ORDER_BY_LAST_RELEASED = "/mods?orderby=lastreleased"
+MODE = "endless"  # Options: "2 days", "endless", or other specific modes
+AMOUNT_OF_MODS = 200  # Options: "endless" or a specific number
+CONVERT_JSON5_TO_JSON = True  # Set to False to disable conversion
 
 
 
-def write_list(a_list, filename):
-    print("Started writing list data into a json file")
-    with open(filename, "w") as fp:
-        json.dump(a_list, fp)
-        print("Done writing JSON data into .json file")
+# Utility Functions
 
-# Read list to memory
-def read_list(filename):
-    # for reading also binary mode is important
-    with open(filename, 'rb') as fp:
-        n_list = json.load(fp)
-        return n_list
+def clear_folder(folder_path):
+    """Empties all contents of a specified folder.
 
-
-
-
-base_url = "http://mods.vintagestory.at/api"
-download_base_url = "https://mods.vintagestory.at/download?fileid="
-
-url_additon = "/mods?orderby=lastreleased"
-
-
-input = "NiclAss"
-discordusername = "Niclas"
-
-
-api_response = requests.get(base_url + url_additon)
-
-api_response_json = api_response.json()
-
-if setting_amount_of_mods == "endless":
-    amount_of_mods = len(api_response_json["mods"])
-else:
-    amount_of_mods = setting_amount_of_mods
-
-modid_list = []
-for x in range(amount_of_mods):
-    if mode == "2 days":
-
+    Args:
+    folder_path (str): The path of the folder to be cleared.
+    """
+    for filename in os.listdir(folder_path):
+        file_path = os.path.join(folder_path, filename)
         try:
-            lastreleased = api_response_json["mods"][x]["lastreleased"]
-
-            date_format = '%Y-%m-%d'
-
-            split_string1 = lastreleased.split(" ")
-            split_string2 = split_string1[0].split("-")
-            inputdate = split_string2[0] + "-" + split_string2[1] + "-" + split_string2[2]
-            #print(inputdate)
-
-            dateatm = time.localtime()
-            formated_dateatm = str(dateatm.tm_year) + "-" + str(dateatm.tm_mon) + "-" + str(dateatm.tm_mday)
-            #print(formated_dateatm)
-
-            last_day = datetime.datetime.strptime(formated_dateatm, date_format) - datetime.timedelta(days=1)
-            formated_last_day = str(last_day.strftime(date_format))
-            #print(formated_last_day)
-
-            if inputdate == formated_dateatm:
-                print("From today.")
-                modid_list.append(api_response_json["mods"][x]["modid"])
-            if inputdate == formated_last_day:
-                print("From yesterday.")
-                modid_list.append(api_response_json["mods"][x]["modid"])
-
-        except:
-
-            print("Error while trying to get lastreleased date.")
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            print(f'Failed to delete {file_path}. Reason: {e}')
 
 
+def delete_folder(folder_name):
+    try:
+        shutil.rmtree(folder_name)
+    except FileNotFoundError:
+        pass
+
+
+def make_folder(folder_name):
+    try:
+        os.makedirs(folder_name, exist_ok=True)
+    except OSError as e:
+        print(f"Error creating folder {folder_name}: {e}")
+
+
+def write_list_to_json(data_list, filename):
+    try:
+        with open(filename, "w") as file:
+            json.dump(data_list, file)
+    except IOError as e:
+        print(f"Error writing to {filename}: {e}")
+
+
+def read_json_to_list(filename):
+    try:
+        with open(filename, 'r', encoding='utf-8') as file:
+            return json.load(file)
+    except json.JSONDecodeError:
+        try:
+            with open(filename, 'r', encoding='utf-8') as file:
+                return json5.load(file)
+        except json5.JSONDecodeError as e:
+            print(f"JSON5 decode error in {filename}: {e}")
+            return []
+    except IOError as e:
+        print(f"Error reading from {filename}: {e}")
+        return []
+
+
+# Fetch Mod Information
+def fetch_mod_information():
+    response = requests.get(BASE_URL + ORDER_BY_LAST_RELEASED)
+    if response.status_code != 200:
+        print("Failed to fetch mod information")
+        return []
+
+    data = response.json()
+    if AMOUNT_OF_MODS == "endless":
+        return data["mods"]
     else:
+        return data["mods"][:int(AMOUNT_OF_MODS)]
+
+
+# Filter Mods Based on Mode
+def filter_mods(mods):
+    if MODE != "2 days":
+        return [mod["modid"] for mod in mods]
+
+    mod_ids = []
+    today = datetime.date.today()
+    yesterday = today - datetime.timedelta(days=1)
+
+    for mod in mods:
         try:
-            modid_list.append(api_response_json["mods"][x]["modid"])
-        except:
-            print("Error while trying to get lastreleased date.")
-print(modid_list)
+            last_released = datetime.datetime.strptime(mod["lastreleased"].split(" ")[0], '%Y-%m-%d').date()
+            if last_released in [today, yesterday]:
+                mod_ids.append(mod["modid"])
+        except (KeyError, ValueError):
+            print("Error parsing last release date for a mod.")
+
+    return mod_ids
 
 
+# Fetch and Download Mods
+def fetch_and_download_mods(mod_ids):
+    file_ids = []
+    for mod_id in mod_ids:
+        try:
+            response = requests.get(f"{BASE_URL}/mod/{mod_id}")
+            if response.status_code == 200:
+                file_id = response.json()["mod"]["releases"][0]["fileid"]
+                file_ids.append(file_id)
+
+                download_and_extract_mod(file_id)
+            else:
+                print(f"Failed to fetch file ID for mod {mod_id}")
+        except KeyError:
+            print(f"Error processing mod {mod_id}")
+
+    return file_ids
 
 
-
-
-#
-#
-#
-
-
-
-fileid_list = []
-for y in range(len(modid_list)):
-    try:
-        fileid_response = requests.get(base_url + "/mod/" + str(modid_list[y]))
-        fileid_response_json = fileid_response.json()
-        fileid_list.append(fileid_response_json["mod"]["releases"][0]["fileid"])
-    except:
-        print("Error: No release found.")
-
-print(fileid_list)
-write_list(fileid_list, "fileid_list.json")
-
-
-
-#
-#
-#
-
-del_folder("mod_downloads")
-
-localsaved_fileid_list = read_list("fileid_list.json")
-len_localsaved_fileid_list = len(localsaved_fileid_list)
-
-for z in range(len_localsaved_fileid_list):
-    del_folder("temp_extract")
+# Download and Extract Mod
+def download_and_extract_mod(file_id):
+    delete_folder("temp_extract")
     make_folder("temp_extract")
     make_folder("mod_downloads")
 
-    mod_download_url = download_base_url + str(localsaved_fileid_list[z])
-    #print(mod_download_url)
-    path = "mod_downloads"+os.sep+"id" + str(localsaved_fileid_list[z]) + ".zip"
-    wget.download(mod_download_url, out=path)
-
-
+    mod_download_url = f"{DOWNLOAD_BASE_URL}{file_id}"
+    download_path = f"mod_downloads/id{file_id}.zip"
 
     try:
-        with zipfile.ZipFile("mod_downloads"+os.sep+"id" + str(localsaved_fileid_list[z]) + ".zip", 'r') as zip_ref:
+        wget.download(mod_download_url, out=download_path)
+        with zipfile.ZipFile(download_path, 'r') as zip_ref:
             zip_ref.extractall("temp_extract")
-    except:
-        "File is not a zipfile!"
+        process_downloaded_mod(file_id)
+    except Exception as e:
+        print(f"Error downloading or extracting mod {file_id}: {e}")
 
 
+# Process Downloaded Mod
+def process_downloaded_mod(file_id):
     try:
-        temp_json = read_list("temp_extract"+os.sep+"modinfo.json")
-    except:
-        print("Error while trying to open modinfo.json")
-    try:
-        modauthor = ""
-        modauthor = temp_json["authors"][0]
-    except:
-        try:
+        mod_info = read_json_to_list("temp_extract/modinfo.json")
+        mod_author = extract_mod_author(mod_info)
+        mod_name = mod_info.get("name", mod_info.get("Name", "Unknown"))
+        mod_id = mod_info.get("modid", mod_info.get("ModID", "Unknown"))
 
-            modauthor = temp_json["Authors"]
-            print(modauthor)
-        except:
-            try:
-
-                modauthor = temp_json["author"]
-                print(modauthor)
-            except:
-                try:
-
-                    modauthor = temp_json["Author"]
-                    print(modauthor)
-                except:
-                    print(modauthor)
-
-    #print(type(modauthor))
-    if type(modauthor) == list:
-        modauthor = modauthor[0]
-
-
-    try:
-        modname = ""
-        modname = temp_json["name"]
-        print(modname)
-    except:
-        try:
-            modname = ""
-            modname = temp_json["Name"]
-        except:
-            print("No modname found.")
-
-    try:
-        modid = ""
-        modid = temp_json["modid"]
-        print(modid)
-    except:
-        try:
-            modid = ""
-            modid = temp_json["ModID"]
-        except:
-            print("No modid found.")
-
-
-    try:
-        os.mkdir("translatedlangfiles"+os.sep + str(modid).lower())
-
-        copy_tree("temp_extract"+os.sep+"assets"+os.sep + str(modid).lower() + os.sep+"lang"+os.sep,"translatedlangfiles"+os.sep + str(modid).lower() + os.sep)
-    except:
-        print("Failed to create tranlatedlangfiles.")
-
-
-
-    try:
-        os.rename("temp_extract"+os.sep+"assets"+os.sep + str(modid).lower() + os.sep+"lang"+os.sep+"en.json", "temp_extract"+os.sep+"assets"+os.sep + str(modid).lower() + os.sep+"lang"+os.sep + str(modid).lower() + "-" + str(modauthor).lower() + ".json")
-
-
-
-
-        shutil.copy("temp_extract"+os.sep+"assets"+os.sep + str(modid).lower() + os.sep+"lang"+os.sep+ str(modid).lower() + "-" + str(modauthor).lower() + ".json", "mod_langfiles"+ os.sep)
-        del_folder("temp_extract")
-
-    except Exception:
+        lang_files_exist = copy_language_files(mod_id)
+        rename_and_move_language_file(mod_id, mod_author, lang_files_exist)
+    except Exception as e:
+        print(f"Error processing mod {file_id}: {e}")
         traceback.print_exc()
-        del_folder("temp_extract")
+    finally:
+        delete_folder("temp_extract")
+
+
+# Extract Mod Author
+def extract_mod_author(mod_info):
+    author = mod_info.get("authors", mod_info.get("Authors", mod_info.get("author", mod_info.get("Author", []))))
+    if isinstance(author, list) and author:
+        return author[0]
+    return author
+
+
+# Copy Language Files
+def copy_language_files(mod_id):
+    lang_folder_path = f"temp_extract/assets/{mod_id.lower()}/lang"
+    if os.path.exists(lang_folder_path) and os.listdir(lang_folder_path):
+        make_folder(f"translatedlangfiles/{mod_id.lower()}")
+        shutil.copytree(lang_folder_path, f"translatedlangfiles/{mod_id.lower()}", dirs_exist_ok=True)
+        return True
+    else:
+        print(f"No language files found for mod {mod_id}")
+        return False
 
 
 
-print(" ")
-print(" ")
-print("Done with call.py")
-print(" ")
-print(" ")
+
+def rename_and_move_language_file(mod_id, mod_author, lang_files_exist):
+    if not lang_files_exist:
+        return
+
+    try:
+        src = f"temp_extract/assets/{mod_id.lower()}/lang/en.json"
+        dst = f"mod_langfiles/{mod_id.lower()}-{mod_author.lower()}.json"
+        make_folder("mod_langfiles")
+
+        if os.path.exists(src):
+            shutil.move(src, dst)
+        else:
+            print(f"No English language file found for mod {mod_id}")
+    except FileNotFoundError:
+        print(f"No English language file found for mod {mod_id}")
+
+def convert_json5_to_json(json5_filepath, json_filepath):
+    try:
+        with open(json5_filepath, 'r', encoding='utf-8') as file:
+            data = json5.load(file)
+
+        with open(json_filepath, 'w', encoding='utf-8') as file:
+            json.dump(data, file, indent=4)
+    except Exception as e:
+        print(f"Error converting file {json5_filepath}: {e}")
+
+def convert_all_json5_in_folder(folder_path):
+    for filename in os.listdir(folder_path):
+        if filename.endswith(".json"):
+            json5_filepath = os.path.join(folder_path, filename)
+            json_filepath = os.path.join(folder_path, filename)
+            convert_json5_to_json(json5_filepath, json_filepath)
+
+# Main Execution
+def main():
+    clear_folder("mod_downloads")
+    mods = fetch_mod_information()
+    mod_ids = filter_mods(mods)
+    file_ids = fetch_and_download_mods(mod_ids)
+    write_list_to_json(file_ids, "fileid_list.json")
+
+    if CONVERT_JSON5_TO_JSON:
+        convert_all_json5_in_folder("mod_langfiles")
+
+    print("\nDone with script execution")
 
 
-
+if __name__ == "__main__":
+    main()
